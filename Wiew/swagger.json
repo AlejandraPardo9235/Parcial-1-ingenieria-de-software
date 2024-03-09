@@ -1,0 +1,161 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Pizzería Perfecta API",
+        "version": "1.0.0",
+        "description": "API Documentation for Pizzería Perfecta"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000"
+        }
+    ],
+    "components": {
+        "schemas": {
+            "pizza": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "ingredients"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "ingredients": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/pizzas": {
+            "get": {
+                "summary": "Get all pizzas",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/pizza"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a pizza",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/pizza"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Pizza created successfully"
+                    }
+                }
+            }
+        },
+        "/pizzas/{id}": {
+            "get": {
+                "summary": "Get a pizza by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/pizza"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pizza not found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Edit a pizza",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/pizza"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Pizza updated successfully"
+                    },
+                    "404": {
+                        "description": "Pizza not found"
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a pizza by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pizza deleted successfully"
+                    },
+                    "404": {
+                        "description": "Pizza not found"
+                    }
+                }
+            }
+        }
+    }
+}
